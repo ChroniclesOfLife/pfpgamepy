@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DoMoneyRacing Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20260328r1">
+</head>
+<body>
+  <div id="consentOverlay" class="consent-overlay">
+    <div class="consent-card">
+      <h2>Before You Enter</h2>
+      <p>
+        This project is a simulated racing and wagering demo for educational purposes only.
+        It is not real-money gambling.
+      </p>
+      <label class="consent-check">
+        <input id="consentEducation" type="checkbox">
+        I understand this app is for educational/simulation use only.
+      </label>
+      <label class="consent-check">
+        <input id="consentAge" type="checkbox">
+        I confirm I am 18+ and consent to continue.
+      </label>
+      <div class="consent-row">
+        <button id="consentAcceptBtn" class="btn btn-primary" disabled>Accept & Continue</button>
+        <button id="consentDeclineBtn" class="btn">Leave</button>
+      </div>
+      <p class="consent-mini">
+        Disclaimer: use at your own risk. No warranties, no liability for losses, misuse, or decisions based on this simulation.
+      </p>
+    </div>
+  </div>
+  <div class="page-bg"></div>
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <h1>DoMoneyRacing</h1>
+        <p>Web client only. Nested-rectangle AI race, wagers, chat strategist, and live sentiment. <span id="buildMeta">Build: loading...</span></p>
+      </div>
+      <div class="status-wrap">
+        <span id="connBadge" class="badge badge-offline">DISCONNECTED</span>
+        <span id="phaseBadge" class="badge">WAITING</span>
+        <button id="audioToggleBtn" class="btn">Sound Off</button>
+        <button id="musicToggleBtn" class="btn">Music Off</button>
+      </div>
+    </header>
+
+    <section class="main-grid">
+      <article class="race-card">
+        <canvas id="raceCanvas" width="940" height="720" aria-label="Race canvas"></canvas>
+        <div class="overlay-meta">
+          <span id="raceMeta">Race #0</span>
+          <span id="endpointMeta">Endpoint: not connected</span>
+        </div>
+      </article>
+
+      <aside class="side-panel">
+        <section class="card" id="connectCard">
+          <h2>Connect</h2>
+          <div class="row two">
+            <input id="nameInput" type="text" placeholder="Player name" maxlength="24" value="Player">
+            <input id="roomInput" type="text" placeholder="Room" maxlength="24" value="Lobby1">
+          </div>
+          <p class="hint">You can keep one lobby (Lobby1) or type any room name.</p>
+          <div id="endpointOptions" class="endpoint-list"></div>
+          <div class="row">
+            <input id="customEndpointInput" type="text" placeholder="Add endpoint (wss://...)">
+            <button id="addEndpointBtn" class="btn">Add</button>
+            <button id="addGgEndpointBtn" class="btn">Add GG Endpoint</button>
+            <button id="resetEndpointsBtn" class="btn">Reset Endpoints</button>
+          </div>
+          <p class="hint">For other computers, use public ngrok/websocket endpoint. Google/Firebase Hosting URL is for web page hosting, not race websocket transport.</p>
+          <div class="row">
+            <button id="connectBtn" class="btn btn-primary">Connect + Join</button>
+            <button id="reconnectBtn" class="btn">Reconnect</button>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Quick Bet</h2>
+          <div id="carButtons" class="chip-row"></div>
+          <div id="amountButtons" class="chip-row"></div>
+          <div id="betModeBox" class="mini"></div>
+          <div class="row">
+            <button id="placeBetBtn" class="btn btn-accent">Place Bet</button>
+            <button id="queueBetBtn" class="btn">Queue Next</button>
+            <button id="cancelBetBtn" class="btn">Cancel Bet</button>
+            <button id="askAiBtn" class="btn">Ask AI</button>
+          </div>
+          <div class="coupon-row">
+            <button class="btn-coupon" data-code="DOMONEY">Do Money</button>
+            <button class="btn-coupon" data-code="TROIDO">Troido</button>
+            <button class="btn-coupon" data-code="DOHAYKHONGDO">DohayKhongdo 50/50</button>
+            <button class="btn-coupon" data-code="KHONGDO">Khongdo</button>
+          </div>
+        </section>
+
+        <section class="card two-col">
+          <div>
+            <h2>Wallet</h2>
+            <div id="walletBox" class="mono mini"></div>
+          </div>
+          <div>
+            <h2>Sentiment</h2>
+            <div id="sentimentBox" class="mini">Waiting for sentiment signal...</div>
+          </div>
+        </section>
+
+        <section class="card three-col">
+          <div>
+            <h2>Chat</h2>
+            <div id="chatLog" class="chat-log"></div>
+            <div class="row">
+              <input id="chatInput" type="text" placeholder="Type message or /ai exacta" maxlength="180">
+              <button id="chatSendBtn" class="btn btn-primary">Send</button>
+            </div>
+          </div>
+          <div>
+            <h2>Live Rankings</h2>
+            <ul id="rankingList" class="list"></ul>
+          </div>
+          <div>
+            <h2>Leaderboard</h2>
+            <ul id="leaderboardList" class="list"></ul>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Notifications</h2>
+          <ul id="notificationList" class="list"></ul>
+        </section>
+
+        <section class="card">
+          <h2>How Money Works</h2>
+          <div class="mini" id="formulaBox">
+            Win payout formula: payout = bet_amount x live_odds x payout_multiplier.<br>
+            Net win = payout - bet_amount.<br>
+            Loss = -bet_amount.<br>
+            Coupons apply directly to wallet balance.
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>User Guide</h2>
+          <div class="mini">
+            1) Pick endpoint option. Selected row is tried first. If it fails, it turns red and app tries next row automatically.<br>
+            2) For other computers use ngrok <code>wss://...</code>. Localhost only works on your own machine.<br>
+            3) Place bet during countdown for current race. During racing/post-race, bet is queued for next race.<br>
+            4) Use Cancel Bet to remove current/queued bet before settlement.<br>
+            5) Public mode: admin/rig controls are fully hidden.<br>
+            6) Sound and music need one click (browser policy) before audio plays.
+          </div>
+        </section>
+
+        <section class="card hidden" id="adminPanel">
+          <h2>Ops</h2>
+          <div class="row two">
+            <input id="adminTokenInput" type="password" placeholder="Token">
+            <input id="adminMultiplierInput" type="number" step="0.1" min="0.5" max="5" value="1.0">
+          </div>
+          <div class="chip-row" id="adminRigButtons"></div>
+          <div class="row">
+            <button id="setRigBtn" class="btn">Set Winner</button>
+            <button id="setMultiplierBtn" class="btn">Set x</button>
+            <button id="clearRigBtn" class="btn">Clear</button>
+          </div>
+          <div class="row two">
+            <input id="adminPlayerInput" type="text" placeholder="Player">
+            <input id="adminDeltaInput" type="number" step="1" placeholder="Delta">
+          </div>
+          <button id="adjustMoneyBtn" class="btn btn-accent">Apply Delta</button>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <script src="app.js?v=20260328r1"></script>
+</body>
+</html>

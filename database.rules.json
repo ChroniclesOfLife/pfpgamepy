@@ -1,0 +1,22 @@
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null",
+    "presence": {
+      "$uid": {
+        ".read": "auth != null",
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    },
+    "leaderboard": {
+      ".indexOn": ["score"]
+    },
+    "chat": {
+      ".read": "auth != null",
+      "$msg": {
+        ".write": "auth != null",
+        ".validate": "newData.hasChildren(['sender','text','ts'])"
+      }
+    }
+  }
+}
