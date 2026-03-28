@@ -2,15 +2,31 @@
 
 Browser-based racing simulation with live odds, wallet/betting flow, queue/cancel wagers, coupon effects, AI chat strategist, live sentiment, and multiplayer room support over WebSocket.
 
-## Important Legal Notice
+## Important Legal Notice / Cảnh báo pháp lý quan trọng
 
 ### English
-This repository is for educational and demonstration purposes only. It is not a real-money gambling platform.
+This repository is for educational and demonstration purposes only. It is **not** a real-money gambling platform.
 By using this software, you accept all risk. The authors/contributors provide this project "as is" with no warranty and no liability for losses, damages, legal issues, or decisions made from simulation output.
 
-### Tuyen bo mien tru trach nhiem (Tieng Viet)
-Du an nay chi phuc vu muc dich hoc tap, nghien cuu va mo phong. Day khong phai nen tang ca cuoc tien that.
-Khi su dung phan mem, ban tu chiu moi rui ro. Tac gia/contributor khong chiu trach nhiem doi voi bat ky ton that, thiet hai, van de phap ly, hoac quyet dinh nao dua tren ket qua mo phong.
+Additional usage restrictions and warnings:
+
+1. No real-world money, real-world currency, cash-equivalent value, or redeemable credits may be used with this software.
+2. This project must not be used to advertise, promote, or operate real betting/gambling services.
+3. Intended for adults only: users must be **18+**.
+4. You are responsible for compliance with local laws, platform policies, and age restrictions in your jurisdiction.
+5. This project does not provide financial, legal, betting, or investment advice.
+
+### Tuyên bố miễn trừ trách nhiệm (Tiếng Việt)
+Dự án này chỉ phục vụ mục đích học tập, nghiên cứu và mô phỏng. Đây **không** phải nền tảng cá cược tiền thật.
+Khi sử dụng phần mềm, bạn tự chịu mọi rủi ro. Tác giả/contributor không chịu trách nhiệm đối với bất kỳ tổn thất, thiệt hại, vấn đề pháp lý, hoặc quyết định nào dựa trên kết quả mô phỏng.
+
+Cảnh báo và giới hạn sử dụng bổ sung:
+
+1. Không được sử dụng tiền thật, tiền tệ ngoài đời thực, giá trị quy đổi thành tiền, hoặc điểm có thể quy đổi.
+2. Không được dùng dự án này để quảng cáo, thúc đẩy, hoặc vận hành dịch vụ cá cược/đánh bạc thực tế.
+3. Chỉ dành cho người trưởng thành: người dùng phải **từ 18 tuổi trở lên**.
+4. Người dùng tự chịu trách nhiệm tuân thủ pháp luật địa phương, chính sách nền tảng, và quy định độ tuổi tại nơi sử dụng.
+5. Dự án không cung cấp lời khuyên tài chính, pháp lý, cá cược, hay đầu tư.
 
 ## Consent Requirement in App
 
@@ -25,6 +41,16 @@ Until both are accepted, gameplay/connection remains locked.
 
 The deployed GitHub Pages build (if present in this repository) should be treated as an earlier preview and not stable.
 For the latest behavior, use the current Firebase Hosting deployment and run the latest backend from this repository.
+
+## Authorship Clarification
+
+Project owner statement:
+
+1. I am the person who came up with the core idea and the project structure.
+2. I also proposed the endpoint-based game implementation concept.
+3. Most coding was done using AI-assisted/vibe coding; I did not manually write most code myself.
+4. I understand the system logic, including the PID-related parts.
+5. For physics, I contributed the concept/idea direction.
 
 ## Features
 
@@ -156,3 +182,8 @@ Approximate interpretation:
 ### Firebase endpoint closes immediately
 
 This is expected if no compatible websocket relay is configured. Keep ngrok endpoint first.
+
+## Disclaimer and License
+
+1. Full legal disclaimer (English + Vietnamese): `DISCLAIMER.md`
+2. License: `MIT` (see `LICENSE`)
