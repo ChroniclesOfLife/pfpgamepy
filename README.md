@@ -42,6 +42,16 @@ Until both are accepted, gameplay/connection remains locked.
 The deployed GitHub Pages build (if present in this repository) should be treated as an earlier preview and not stable.
 For the latest behavior, use the current Firebase Hosting deployment and run the latest backend from this repository.
 
+## Authorship Clarification
+
+Project owner statement:
+
+1. I am the person who came up with the core idea and the project structure.
+2. I also proposed the endpoint-based game implementation concept.
+3. Most coding was done using AI-assisted/vibe coding; I did not manually write most code myself.
+4. I understand the system logic, including the PID-related parts.
+5. For physics, I contributed the concept/idea direction.
+
 ## Features
 
 1. Top-down nested-rectangle race with 5 AI cars and collision events.
